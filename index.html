@@ -42,13 +42,13 @@ loops:'public class Main {\n    public static void main(String[] args) {\n      
 arrays:'import java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        int[] numbers = {4, 2, 8, 1, 5};\n        System.out.println(Arrays.toString(numbers));\n        System.out.println("Length: " + numbers.length);\n    }\n}',
 input:'import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.print("Enter your name: ");\n        String name = sc.nextLine();\n        System.out.println("Hello, " + name + "!");\n        sc.close();\n    }\n}'
 };
-const code=document.querySelector('#code'), highlight=document.querySelector('#highlight'), highlightedCode=highlight.querySelector('code');
-function refreshHighlight(){highlightedCode.textContent=code.value+'\\n';if(window.Prism)Prism.highlightElement(highlightedCode);highlight.scrollTop=code.scrollTop;highlight.scrollLeft=code.scrollLeft}
+const code=document.querySelector('#code'), highlight=document.querySelector('#highlight'), highlightedCode=highlight.querySelector('code'), stdin=document.querySelector('#stdin'), output=document.querySelector('#output'), status=document.querySelector('#status'), run=document.querySelector('#run');
+function refreshHighlight(){highlightedCode.textContent=code.value+'\n';if(window.Prism)Prism.highlightElement(highlightedCode);highlight.scrollTop=code.scrollTop;highlight.scrollLeft=code.scrollLeft}
 code.addEventListener('input',refreshHighlight);code.addEventListener('scroll',()=>{highlight.scrollTop=code.scrollTop;highlight.scrollLeft=code.scrollLeft});
 const themeToggle=document.querySelector('#themeToggle'),themeBadge=document.querySelector('#themeBadge');
 function applyTheme(theme){document.documentElement.dataset.theme=theme;const dark=theme==='dark';themeToggle.textContent=dark?'☀️ Light mode':'🌙 Dark mode';themeBadge.textContent=dark?'● OLED DARK':'○ LIGHT';document.querySelector('meta[name="theme-color"]').content=dark?'#000000':'#f4f6fa';try{localStorage.setItem('byteforge-theme',theme)}catch(e){}}
 let savedTheme='dark';try{savedTheme=localStorage.getItem('byteforge-theme')||'dark'}catch(e){}applyTheme(savedTheme);themeToggle.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
-const code=document.querySelector('#code'), stdin=document.querySelector('#stdin'), output=document.querySelector('#output'), status=document.querySelector('#status'), run=document.querySelector('#run');
+
 document.querySelector('#sample').addEventListener('change',e=>{if(examples[e.target.value]){code.value=examples[e.target.value];refreshHighlight()}});
 document.querySelector('#reset').addEventListener('click',()=>{code.value=starter;refreshHighlight();stdin.value='';setOutput('Code reset.','Ready')});
 document.querySelector('#clear').addEventListener('click',()=>setOutput('','Output cleared'));
@@ -80,5 +80,6 @@ run.addEventListener('click',async()=>{
  }catch(err){setOutput('Could not run code. '+(err instanceof Error?err.message:'Unknown error')+'\n\nCheck your internet connection or whether Wandbox is available. This project depends on that external API; it does not compile Java locally.', 'Request failed',true)}
  finally{run.classList.remove('loading');run.textContent='▶ Run Java'}
 });
-refreshHighlight();\ncode.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=code.selectionStart,b=code.selectionEnd;code.setRangeText('    ',a,b,'end')}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run.click()}});
+refreshHighlight();
+code.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=code.selectionStart,b=code.selectionEnd;code.setRangeText('    ',a,b,'end')}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run.click()}});
 </script></body></html>
