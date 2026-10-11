@@ -4,7 +4,7 @@ A lightweight, responsive, OLED-dark online Java playground. Write Java code in 
 
 ## Live Demo
 
-The intended GitHub Pages address is https://biggybird.github.io/byteforge-java-compiler/ . This URL will only work after GitHub Pages is enabled and the site is published. I couldn't confirm a live deployment yet.
+**Open ByteForge:** https://biggybird.github.io/byteforge-java-compiler/ 
 
 ## Explore the projects
 
