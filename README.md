@@ -2,12 +2,18 @@
 
 A lightweight, responsive, OLED-dark online Java playground. Write Java code in the browser, provide standard input, and run it through the Wandbox compile API.
 
+## Live Demo
+
+**Status: Not deployed yet.**
+
+The intended GitHub Pages address is https://biggybird.github.io/byteforge-java-compiler/ . This URL will only work after GitHub Pages is enabled and the site is published. I couldn't confirm a live deployment yet.
+
 ## Explore the projects
 
 - **ByteForge Java Lab:** [Open this repository](https://github.com/biggybird/byteforge-java-compiler)
 - **JavaLab Online Compiler:** [Open this repository](https://github.com/biggybird/javalab-online-compiler)
 
-> These are repository links. A live demo is only available if GitHub Pages or another hosting service has been configured and deployed.
+**JavaLab live site:** https://javalab-online-compiler.vercel.app
 
 ## Features
 
@@ -32,6 +38,7 @@ You can also serve the folder with any static web server.
 2. Under **Build and deployment**, choose **Deploy from a branch**.
 3. Select branch `main` and folder `/ (root)`, then save.
 4. Wait for GitHub Pages to publish the site.
+5. Once published, open the URL shown in GitHub Pages settings. It should normally be https://biggybird.github.io/byteforge-java-compiler/.
 
 ## Important API note
 
