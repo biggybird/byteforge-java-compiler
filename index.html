@@ -9,7 +9,7 @@
 </style>
 </head>
 <body><main class="shell">
-<header class="top"><div class="brand"><div class="logo">B</div>ByteForge <span class="subtle">/ JAVA LAB</span></div><span class="badge">● OLED DARK</span></header>
+<header class="top"><div class="brand"><div class="logo">B</div>ByteForge</div><span class="badge">● OLED DARK</span></header>
 <section class="intro"><h1>Write code.<br><span>Run it anywhere.</span></h1><p>A lightweight Java playground for practice, experiments, and learning. No installation needed.</p></section>
 <div class="toolbar"><select id="sample" class="select" aria-label="Load example"><option value="">Examples</option><option value="hello">Hello World</option><option value="loops">Loops</option><option value="arrays">Arrays</option><option value="input">User input</option></select><button id="reset">Reset code</button><button id="clear">Clear output</button><button id="run" class="primary">▶ Run Java</button></div>
 <div class="workspace">
@@ -41,16 +41,27 @@ run.addEventListener('click',async()=>{
  const source=code.value.trim();if(!source){setOutput('Add some Java code first.','No code',true);return}
  run.classList.add('loading');run.textContent='Running…';setOutput('Compiling and running your program…','Working');
  try{
-  const response=await fetch('https://wandbox.org/api/compile.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({compiler:'openjdk-jdk-22+36',code:source,stdin:stdin.value,save:false})});
+  // Wandbox compiles Java from prog.java and launches the prog class.
+  // Adapt the user's conventional class name for the service without changing their editor contents.
+  let runnableSource=source;
+  const publicClass=/\bpublic\s+class\s+([A-Za-z_$][\w$]*)/.exec(runnableSource);
+  if(publicClass){
+   runnableSource=runnableSource.replace(/\bpublic\s+class\s+[A-Za-z_$][\w$]*/, 'public class prog');
+  }else{
+   const classDecl=/\bclass\s+([A-Za-z_$][\w$]*)/.exec(runnableSource);
+   if(classDecl)runnableSource=runnableSource.replace(/\bclass\s+[A-Za-z_$][\w$]*/, 'class prog');
+  }
+  const response=await fetch('https://wandbox.org/api/compile.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({compiler:'openjdk-jdk-22+36',code:runnableSource,stdin:stdin.value,save:false})});
   if(!response.ok)throw new Error('Compiler service returned HTTP '+response.status+'. Try again later.');
   const data=await response.json();let result='';
-  if(data.program_output)result+=data.program_output;
   if(data.compiler_error)result+='[Compiler errors]\n'+data.compiler_error;
-  if(data.program_error)result+='\n[Runtime errors]\n'+data.program_error;
-  if(data.compiler_message&&!data.compiler_error)result+='[Compiler message]\n'+data.compiler_message;
-  const failed=Boolean(data.compiler_error||data.program_error||data.status==='1');
+  if(data.compiler_output)result+=(result?'\n':'')+data.compiler_output;
+  if(data.program_output)result+=(result?'\n':'')+data.program_output;
+  if(data.program_error)result+=(result?'\n':'')+'[Runtime errors]\n'+data.program_error;
+  if(data.compiler_message&&!data.compiler_error)result+=(result?'\n':'')+'[Compiler message]\n'+data.compiler_message;
+  const failed=Boolean(data.compiler_error||data.program_error||String(data.status)!=='0');
   setOutput(result.trimEnd()||'(Program finished with no output.)',failed?'Finished with errors':'Finished',failed);
- }catch(err){setOutput('Could not run code. '+err.message+'\n\nCheck your internet connection or whether Wandbox is available. This project depends on that external API; it does not compile Java locally.', 'Request failed',true)}
+ }catch(err){setOutput('Could not run code. '+(err instanceof Error?err.message:'Unknown error')+'\n\nCheck your internet connection or whether Wandbox is available. This project depends on that external API; it does not compile Java locally.', 'Request failed',true)}
  finally{run.classList.remove('loading');run.textContent='▶ Run Java'}
 });
 code.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=code.selectionStart,b=code.selectionEnd;code.setRangeText('    ',a,b,'end')}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run.click()}});
