@@ -2,6 +2,13 @@
 
 A lightweight, responsive, OLED-dark online Java playground. Write Java code in the browser, provide standard input, and run it through the Wandbox compile API.
 
+## Explore the projects
+
+- **ByteForge Java Lab:** [Open this repository](https://github.com/biggybird/byteforge-java-compiler)
+- **JavaLab Online Compiler:** [Open this repository](https://github.com/biggybird/javalab-online-compiler)
+
+> These are repository links. A live demo is only available if GitHub Pages or another hosting service has been configured and deployed.
+
 ## Features
 
 - OLED-friendly dark interface
@@ -23,7 +30,7 @@ You can also serve the folder with any static web server.
 
 1. Open the repository's **Settings → Pages**.
 2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch `main` and folder `/ (root)), then save.
+3. Select branch `main` and folder `/ (root)`, then save.
 4. Wait for GitHub Pages to publish the site.
 
 ## Important API note
