@@ -11,8 +11,6 @@ A lightweight, responsive, OLED-dark online Java playground. Write Java code in 
 - **ByteForge Java Lab:** [Open this repository](https://github.com/biggybird/byteforge-java-compiler)
 - **JavaLab Online Compiler:** [Open this repository](https://github.com/biggybird/javalab-online-compiler)
 
-**JavaLab live site:** https://javalab-online-compiler.vercel.app
-
 ## Features
 
 - OLED-friendly dark interface
